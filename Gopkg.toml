@@ -26,6 +26,10 @@
 
 
 [[constraint]]
+  branch = "master"
+  name = "github.com/gin-gonic/contrib"
+
+[[constraint]]
   name = "github.com/gin-gonic/gin"
   version = "1.4.0"
 
@@ -36,3 +40,7 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/gin-contrib/sessions"

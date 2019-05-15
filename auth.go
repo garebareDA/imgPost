@@ -3,6 +3,7 @@ package main
 import(
 	"github.com/gin-gonic/gin"
 	"github.com/markbates/goth/gothic"
+	"github.com/gin-contrib/sessions"
 	"log"
 	"net/http"
 	"context"
@@ -25,12 +26,18 @@ func callBack(c *gin.Context) {
 		return
 	}
 
-	log.Printf("%#v", user)
+	session := sessions.Default(c)
+	session.Set("alive", true)
+	session.Set("userId", user.UserID)
+	log.Println(user.UserID)
+	session.Save()
 }
 
 func logOut(c *gin.Context) {
-	gothic.Logout(c.Writer, c.Request)
-	c.Redirect(http.StatusTemporaryRedirect, "/")
+	session := sessions.Default(c)
+	session.Clear()
+	session.Save()
+	log.Println("Session clear")
 }
 
 func contextWithProviderName(c *gin.Context, provider string) (*http.Request){

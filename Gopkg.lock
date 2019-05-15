@@ -11,6 +11,17 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:78516e6b3d7acda7f8763dc372c7bd9dafbf5714127a3879dc540ed5c51cb978"
+  name = "github.com/gin-contrib/sessions"
+  packages = [
+    ".",
+    "cookie",
+  ]
+  pruneopts = "UT"
+  revision = "3cb4c4f2d615bc14e3e6a740f69cc6447fa05807"
+
+[[projects]]
+  branch = "master"
   digest = "1:a4b5a6b32f33323c7850fae4ec085a0fbac3be93c057b6b8cef5bcabe24645ac"
   name = "github.com/gin-contrib/sse"
   packages = ["."]
@@ -35,8 +46,8 @@
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   pruneopts = "UT"
-  revision = "c823c79ea1570fb5ff454033735a8e68575d1d0f"
-  version = "v1.3.0"
+  revision = "b5d812f8a3706043e23a9cd5babf2e5423744d30"
+  version = "v1.3.1"
 
 [[projects]]
   digest = "1:c79fb010be38a59d657c48c6ba1d003a8aa651fa56b579d959d74573b7dff8e1"
@@ -194,6 +205,8 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/gin-contrib/sessions",
+    "github.com/gin-contrib/sessions/cookie",
     "github.com/gin-gonic/gin",
     "github.com/markbates/goth",
     "github.com/markbates/goth/gothic",
