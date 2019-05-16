@@ -126,6 +126,22 @@
   version = "1.0.1"
 
 [[projects]]
+  branch = "master"
+  digest = "1:34534b73e925d20cc72cf202f8b482fdcbe3a1b113e19375f31aadabd0f0f97d"
+  name = "github.com/nfnt/resize"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "83c6a9932646f83e3267f353373d47347b6036b2"
+
+[[projects]]
+  branch = "master"
+  digest = "1:037c9a38e666152d4a33785990487a1f7ea816e81dc3273f0caefc0f5cf9b13d"
+  name = "github.com/olahol/go-imageupload"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "09d2b92fa05eff7d0c06d77a7803c74a824b0eb1"
+
+[[projects]]
   digest = "1:d0072748c62defde1ad99dde77f6ffce492a0e5aea9204077e497c7edfb86653"
   name = "github.com/ugorji/go"
   packages = ["codec"]
@@ -211,6 +227,7 @@
     "github.com/markbates/goth",
     "github.com/markbates/goth/gothic",
     "github.com/markbates/goth/providers/google",
+    "github.com/olahol/go-imageupload",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

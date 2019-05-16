@@ -6,6 +6,7 @@ import(
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/markbates/goth/providers/google"
+	"imgPost/auth"
 )
 
 func main() {
@@ -22,9 +23,11 @@ func main() {
 	router.LoadHTMLGlob("templates/*.html")
 
 	router.GET("/", home)
-	router.GET("/auth/:provider", auth)
-	router.GET("/auth/:provider/callback", callBack)
-	router.GET("/auth/:provider/logout", logOut)
+	router.GET("/auth/:provider", auth.Auth)
+	router.GET("/auth/:provider/callback", auth.CallBack)
+	router.GET("/auth/:provider/logout", auth.LogOut)
+
+	router.POST("/upload", imagePost)
 
 	router.Run(":8000")
 }

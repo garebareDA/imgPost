@@ -1,4 +1,4 @@
-package main
+package auth
 
 import(
 	"github.com/gin-gonic/gin"
@@ -9,14 +9,14 @@ import(
 	"context"
 )
 
-func auth(c *gin.Context) {
+func Auth(c *gin.Context) {
 	provider := c.Param("provider")
 	c.Request = contextWithProviderName(c, provider)
 
 	gothic.BeginAuthHandler(c.Writer, c.Request)
 }
 
-func callBack(c *gin.Context) {
+func CallBack(c *gin.Context) {
 	provider := c.Param("provider")
 	c.Request = contextWithProviderName(c, provider)
 
@@ -29,11 +29,10 @@ func callBack(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Set("alive", true)
 	session.Set("userId", user.UserID)
-	log.Println(user.UserID)
 	session.Save()
 }
 
-func logOut(c *gin.Context) {
+func LogOut(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Clear()
 	session.Save()
