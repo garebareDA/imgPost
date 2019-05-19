@@ -7,6 +7,7 @@ import(
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/markbates/goth/providers/google"
 	"imgPost/auth"
+	"imgPost/imagePost"
 )
 
 func main() {
@@ -19,6 +20,8 @@ func main() {
 
 	store := cookie.NewStore([]byte("secret"))
 
+	router.Static("/img","./img")
+
 	router.Use(sessions.Sessions("postSession", store))
 	router.LoadHTMLGlob("templates/*.html")
 
@@ -27,7 +30,7 @@ func main() {
 	router.GET("/auth/:provider/callback", auth.CallBack)
 	router.GET("/auth/:provider/logout", auth.LogOut)
 
-	router.POST("/upload", imagePost)
+	router.POST("/upload", imagePost.ImagePost)
 
 	router.Run(":8000")
 }
