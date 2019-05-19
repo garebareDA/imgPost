@@ -48,3 +48,7 @@
 [[constraint]]
   branch = "master"
   name = "github.com/olahol/go-imageupload"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/utrack/gin-csrf"

@@ -11,6 +11,14 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:fdae1c338ec6667687fb3fdbde842b3c421c930163981b5d441502b240b7f50b"
+  name = "github.com/dchest/uniuri"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "8902c56451e9b58ff940bbe5fec35d5f9c04584a"
+
+[[projects]]
+  branch = "master"
   digest = "1:78516e6b3d7acda7f8763dc372c7bd9dafbf5714127a3879dc540ed5c51cb978"
   name = "github.com/gin-contrib/sessions"
   packages = [
@@ -151,6 +159,14 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:4befa964e749333d63e97053d50b5ede806d35064cf358c6ab07f6fc626a0de7"
+  name = "github.com/utrack/gin-csrf"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "40fb8d2c8fcae39251839d79eabde1a88383c33b"
+
+[[projects]]
+  branch = "master"
   digest = "1:f8b491a7c25030a895a0e579742d07136e6958e77ef2d46e769db8eec4e58fcd"
   name = "golang.org/x/net"
   packages = [
@@ -228,6 +244,7 @@
     "github.com/markbates/goth/gothic",
     "github.com/markbates/goth/providers/google",
     "github.com/olahol/go-imageupload",
+    "github.com/utrack/gin-csrf",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

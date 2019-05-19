@@ -6,12 +6,12 @@ import(
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/markbates/goth/providers/google"
+	"github.com/utrack/gin-csrf"
 	"imgPost/auth"
 	"imgPost/imagePost"
 )
 
 func main() {
-
 	goth.UseProviders(
 		google.New("token", "secret", "http://localhost:8000/auth/google/callback"),
 	)
@@ -23,6 +23,13 @@ func main() {
 	router.Static("/img","./img")
 
 	router.Use(sessions.Sessions("postSession", store))
+	router.Use(csrf.Middleware(csrf.Options{
+		Secret: "secretImgPoster",
+		ErrorFunc: func(c *gin.Context) {
+			c.String(400, "CSRF token mismatch")
+			c.Abort()
+		},
+	}))
 	router.LoadHTMLGlob("templates/*.html")
 
 	router.GET("/", home)
