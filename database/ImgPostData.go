@@ -6,8 +6,9 @@ import(
 
 type ImgPostData struct{
 	gorm.Model
-	userNmae string
-	id string
-	text string
-	imgUrl string
+	ID string
+	UserNmae string
+	Text string
+	ImgURL string
+	postID string
 }

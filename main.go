@@ -29,6 +29,7 @@ func main() {
 	store := cookie.NewStore([]byte("secret"))
 
 	router.Static("/img","./img")
+	router.Static("/icon", "./icon")
 
 	router.Use(sessions.Sessions("postSession", store))
 	router.Use(csrf.Middleware(csrf.Options{
@@ -40,12 +41,16 @@ func main() {
 	}))
 	router.LoadHTMLGlob("templates/*.html")
 
+	//ホーム
 	router.GET("/", home)
+
+	//Auth認証
 	router.GET("/auth/:provider", auth.Auth)
 	router.GET("/auth/:provider/callback", auth.CallBack)
 	router.GET("/auth/:provider/logout", auth.LogOut)
 
 	router.POST("/upload", imagePost.ImagePost)
+	router.POST("/acount", Registration)
 
 	router.Run(":8000")
 }

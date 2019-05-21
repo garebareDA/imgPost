@@ -6,7 +6,7 @@ import(
 
 type UserData struct{
 	gorm.Model
-	userNmae string
-	id string
-	userImg string
+	ID string
+	UserName string
+	Icon string
 }

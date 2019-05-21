@@ -7,8 +7,10 @@ import(
 	"log"
 	"net/http"
 	"context"
+	"imgPost/database"
 )
 
+//Auth 認証にリダイレクト
 func Auth(c *gin.Context) {
 	provider := c.Param("provider")
 	c.Request = contextWithProviderName(c, provider)
@@ -16,6 +18,7 @@ func Auth(c *gin.Context) {
 	gothic.BeginAuthHandler(c.Writer, c.Request)
 }
 
+//CallBack UserIDをDBに追加
 func CallBack(c *gin.Context) {
 	provider := c.Param("provider")
 	c.Request = contextWithProviderName(c, provider)
@@ -26,19 +29,31 @@ func CallBack(c *gin.Context) {
 		return
 	}
 
+	//sessionに追加
 	session := sessions.Default(c)
 	session.Set("alive", true)
 	session.Set("userId", user.UserID)
 	session.Save()
+
+	db := database.ConnectDB()
+	defer db.Close()
+
+	//DBにIDを追加
+	db.Save(database.UserData{ID:user.UserID})
+	//TODOアカウント登録画面に遷移
 }
 
+//LogOut sessionを削除
 func LogOut(c *gin.Context) {
 	session := sessions.Default(c)
+
+	//sessionを削除
 	session.Clear()
 	session.Save()
 	log.Println("Session clear")
 }
 
+//contextWithProviderName サポート関数
 func contextWithProviderName(c *gin.Context, provider string) (*http.Request){
 	return  c.Request.WithContext(context.WithValue(c.Request.Context(), "provider", provider))
 }

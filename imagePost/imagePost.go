@@ -9,6 +9,7 @@ import(
 
 var num int
 
+//ImagePost アップロード画像の保存
 func ImagePost(c *gin.Context) {
 	img, err := imageupload.Process(c.Request, "file")
 	if err != nil {
