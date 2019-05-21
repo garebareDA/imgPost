@@ -9,9 +9,17 @@ import(
 	"github.com/utrack/gin-csrf"
 	"imgPost/auth"
 	"imgPost/imagePost"
+	"imgPost/database"
 )
 
 func main() {
+
+	db := database.ConnectDB()
+	defer db.Close()
+
+	db.Set("gorm:table_options", "ENGINE = InnoDB CHARSET=utf8mb4",).AutoMigrate(&database.ImgPostData{})
+	db.Set("gorm:table_options", "ENGINE = InnoDB CHARSET=utf8mb4",).AutoMigrate(&database.UserData{})
+
 	goth.UseProviders(
 		google.New("token", "secret", "http://localhost:8000/auth/google/callback"),
 	)

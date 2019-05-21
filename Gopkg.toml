@@ -52,3 +52,11 @@
 [[constraint]]
   branch = "master"
   name = "github.com/utrack/gin-csrf"
+
+[[constraint]]
+  name = "github.com/jinzhu/gorm"
+  version = "1.9.8"
+
+[[constraint]]
+  name = "github.com/go-sql-driver/mysql"
+  version = "1.4.1"
