@@ -33,12 +33,13 @@ func main() {
 
 	router.Use(sessions.Sessions("postSession", store))
 	router.Use(csrf.Middleware(csrf.Options{
-		Secret: "secretImgPoster",
-		ErrorFunc: func(c *gin.Context) {
+		Secret: "imgPoster",
+		ErrorFunc: func(c *gin.Context){
 			c.String(400, "CSRF token mismatch")
 			c.Abort()
 		},
 	}))
+
 	router.LoadHTMLGlob("templates/*.html")
 
 	//ホーム
@@ -49,7 +50,9 @@ func main() {
 	router.GET("/auth/:provider/callback", auth.CallBack)
 	router.GET("/auth/:provider/logout", auth.LogOut)
 
-	router.POST("/upload", imagePost.ImagePost)
+	router.GET("/acount", acount)
+
+	router.POST("/", imagePost.ImagePost)
 	router.POST("/acount", Registration)
 
 	router.Run(":8000")

@@ -7,7 +7,6 @@ import(
 	"log"
 	"net/http"
 	"context"
-	"imgPost/database"
 )
 
 //Auth 認証にリダイレクト
@@ -18,7 +17,7 @@ func Auth(c *gin.Context) {
 	gothic.BeginAuthHandler(c.Writer, c.Request)
 }
 
-//CallBack UserIDをDBに追加
+//CallBack sessionに保存
 func CallBack(c *gin.Context) {
 	provider := c.Param("provider")
 	c.Request = contextWithProviderName(c, provider)
@@ -35,12 +34,7 @@ func CallBack(c *gin.Context) {
 	session.Set("userId", user.UserID)
 	session.Save()
 
-	db := database.ConnectDB()
-	defer db.Close()
-
-	//DBにIDを追加
-	db.Save(database.UserData{ID:user.UserID})
-	//TODOアカウント登録画面に遷移
+	c.Redirect(http.StatusMovedPermanently, "/acount")
 }
 
 //LogOut sessionを削除

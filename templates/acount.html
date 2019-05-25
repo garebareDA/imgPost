@@ -5,14 +5,11 @@
   <title>Document</title>
 </head>
 <body>
-  {{.h}}
-  <p>{{.id}}</p>
-  <p>{{.alive}}</p>
-  <form method="POST" action="/" enctype="multipart/form-data">
+  <form method="POST" action="/acount" enctype="multipart/form-data">
     <input type="file" name="file">
+    <input type="text" name="name">
     <input type="submit">
     <input type="hidden" name="_csrf" value="{{._csrf}}">
   </form>
-  <a href="/auth/google">login</a>
 </body>
 </html>

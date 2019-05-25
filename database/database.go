@@ -12,10 +12,10 @@ const(
 	Dialect = "mysql"
 
 	//DBUser ユーザー名
-	DBUser = "mysqlUser"
+	DBUser = "User"
 
 	//DBPass パスワード
-	DBPass = "mariosonic0521da"
+	DBPass = "pass"
 
 	//DBProtocol プロトコル
 	DBProtocol = "tcp(127.0.0.1)"

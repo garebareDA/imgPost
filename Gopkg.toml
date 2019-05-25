@@ -24,11 +24,6 @@
 #   go-tests = true
 #   unused-packages = true
 
-
-[[constraint]]
-  branch = "master"
-  name = "github.com/gin-gonic/contrib"
-
 [[constraint]]
   name = "github.com/gin-gonic/gin"
   version = "1.4.0"
@@ -50,13 +45,17 @@
   name = "github.com/olahol/go-imageupload"
 
 [[constraint]]
-  branch = "master"
-  name = "github.com/utrack/gin-csrf"
-
-[[constraint]]
   name = "github.com/jinzhu/gorm"
   version = "1.9.8"
 
 [[constraint]]
   name = "github.com/go-sql-driver/mysql"
   version = "1.4.1"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/utrack/gin-csrf"
+
+[[constraint]]
+  name = "github.com/google/uuid"
+  version = "1.1.1"
