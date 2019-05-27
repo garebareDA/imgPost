@@ -52,17 +52,16 @@ func Registration(c *gin.Context) {
 	userID := session.Get("userId")
 	alive := session.Get("alive")
 
-	if alive == false {
-		session.Clear()
-		session.Save()
-		c.Redirect(http.StatusOK, "/")
+	if alive == nil {
+		c.Redirect(http.StatusFound, "/auth/google/logout")
+		c.Abort()
 	}
 
 	db := database.ConnectDB()
 	defer db.Close()
 
 	db.Where(database.UserData{UserID: userID.(string)}).Assign(database.UserData{UserName: name[0], Icon: uuid}).FirstOrCreate(&database.UserData{})
-	c.Redirect(http.StatusMovedPermanently, "/")
+	c.Redirect(http.StatusFound, "/")
 }
 
 func acount(c *gin.Context) {
@@ -72,9 +71,29 @@ func acount(c *gin.Context) {
 
 	token := csrf.GetToken(c)
 
-	c.HTML(http.StatusOK, "acount.html", gin.H{
-		"_csrf": token,
-		"alive": alive,
-		"id":userID,
-	})
+	db := database.ConnectDB()
+	defer db.Close()
+
+	if alive == true {
+		user := database.UserData{}
+		user.UserID = userID.(string)
+
+		log.Println(db.First(&user).RecordNotFound())
+
+		if db.First(&user).RecordNotFound() == false {
+			log.Println(db.First(&user))
+			c.Redirect(http.StatusFound, "/")
+			c.Abort()
+		}
+
+		c.HTML(http.StatusOK, "acount.html", gin.H{
+				"_csrf": token,
+				"alive": alive,
+				"id":userID,
+			})
+
+	}else{
+		c.Redirect(http.StatusFound, "/auth/google/logout")
+		c.Abort()
+	}
 }

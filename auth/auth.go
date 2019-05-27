@@ -34,7 +34,8 @@ func CallBack(c *gin.Context) {
 	session.Set("userId", user.UserID)
 	session.Save()
 
-	c.Redirect(http.StatusMovedPermanently, "/acount")
+	c.Redirect(http.StatusFound, "/acount")
+	c.Abort()
 }
 
 //LogOut sessionを削除
@@ -45,6 +46,8 @@ func LogOut(c *gin.Context) {
 	session.Clear()
 	session.Save()
 	log.Println("Session clear")
+	c.Redirect(http.StatusFound, "/")
+	c.Abort()
 }
 
 //contextWithProviderName サポート関数
