@@ -8,7 +8,7 @@ import(
 	"github.com/markbates/goth/providers/google"
 	"github.com/utrack/gin-csrf"
 	"imgPost/auth"
-	"imgPost/imagePost"
+	"imgPost/routes"
 	"imgPost/database"
 )
 
@@ -43,17 +43,17 @@ func main() {
 	router.LoadHTMLGlob("templates/*.html")
 
 	//ホーム
-	router.GET("/", home)
+	router.GET("/", routes.Home)
 
 	//Auth認証
 	router.GET("/auth/:provider", auth.Auth)
 	router.GET("/auth/:provider/callback", auth.CallBack)
 	router.GET("/auth/:provider/logout", auth.LogOut)
 
-	router.GET("/acount", acount)
+	router.GET("/acount", routes.Acount)
 
-	router.POST("/", imagePost.ImagePost)
-	router.POST("/acount", Registration)
+	router.POST("/", routes.ImagePost)
+	router.POST("/acount", routes.CreateAcount)
 
 	router.Run(":8000")
 }

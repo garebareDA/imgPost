@@ -12,7 +12,7 @@ const(
 	Dialect = "mysql"
 
 	//DBUser ユーザー名
-	DBUser = "User"
+	DBUser = "user"
 
 	//DBPass パスワード
 	DBPass = "pass"

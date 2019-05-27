@@ -1,4 +1,4 @@
-package main
+package routes
 
 import(
 	"github.com/gin-gonic/gin"
@@ -11,39 +11,22 @@ import(
 	"imgPost/database"
 )
 
-func home(c *gin.Context) {
-	session := sessions.Default(c)
-	userID := session.Get("userId")
-	alive := session.Get("alive")
+//CreateAcount アカウント作成
+func CreateAcount(c *gin.Context) {
 
-	token := csrf.GetToken(c)
+	imageupload.LimitFileSize(5242880, c.Writer, c.Request)
 
-	log.Println(userID)
-	c.HTML(http.StatusOK, "index.html", gin.H{
-		"h": "<h1>aaaaaaaaaaaaaaaaa</h1>",
-		"alive": alive,
-		"id":userID,
-		"_csrf": token,
-	})
-}
-
-//Registration アカウント作成
-func Registration(c *gin.Context) {
 	//アップロード画像の取得
 	img, err := imageupload.Process(c.Request, "file")
 	if err != nil {
 		log.Panicln(err)
 	}
 
-	//300x300にリサイズ
-	thumb, err := imageupload.ThumbnailPNG(img, 300, 300)
-	if err != nil {
-		log.Panicln(err)
-	}
+	log.Println(img.Size)
 
 	uuid := uuid.New().String()
 
-	thumb.Save("./icon/" + uuid + ".png")
+	img.Save("./icon/" + uuid + ".png")
 
 	c.Request.ParseForm()
 	name := c.Request.Form["name"]
@@ -64,7 +47,7 @@ func Registration(c *gin.Context) {
 	c.Redirect(http.StatusFound, "/")
 }
 
-func acount(c *gin.Context) {
+func Acount(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("userId")
 	alive := session.Get("alive")
