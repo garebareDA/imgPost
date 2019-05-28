@@ -14,6 +14,15 @@ import(
 //CreateAcount アカウント作成
 func CreateAcount(c *gin.Context) {
 
+	session := sessions.Default(c)
+	userID := session.Get("userId")
+	alive := session.Get("alive")
+
+	if alive == nil {
+		c.Redirect(http.StatusFound, "/auth/google/logout")
+		c.Abort()
+	}
+
 	imageupload.LimitFileSize(5242880, c.Writer, c.Request)
 
 	//アップロード画像の取得
@@ -31,15 +40,6 @@ func CreateAcount(c *gin.Context) {
 	c.Request.ParseForm()
 	name := c.Request.Form["name"]
 
-	session := sessions.Default(c)
-	userID := session.Get("userId")
-	alive := session.Get("alive")
-
-	if alive == nil {
-		c.Redirect(http.StatusFound, "/auth/google/logout")
-		c.Abort()
-	}
-
 	db := database.ConnectDB()
 	defer db.Close()
 
@@ -47,6 +47,7 @@ func CreateAcount(c *gin.Context) {
 	c.Redirect(http.StatusFound, "/")
 }
 
+//Acount アカウントの作成画面
 func Acount(c *gin.Context) {
 	session := sessions.Default(c)
 	userID := session.Get("userId")

@@ -39,11 +39,3 @@ func ConnectDB() *gorm.DB {
 
 	return db
 }
-
-//InsertImg 配列をDBに追加
-func InsertImg(ImgPostData []ImgPostData, db *gorm.DB) {
-	for _, ImgPostData := range ImgPostData {
-			db.NewRecord(ImgPostData)
-			db.Create(&ImgPostData)
-	}
-}

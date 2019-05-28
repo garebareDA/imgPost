@@ -10,6 +10,7 @@
   <p>{{.alive}}</p>
   <form method="POST" action="/" enctype="multipart/form-data">
     <input type="file" name="file">
+    <input type="text" name="text">
     <input type="submit">
     <input type="hidden" name="_csrf" value="{{._csrf}}">
   </form>
