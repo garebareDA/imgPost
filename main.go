@@ -52,6 +52,8 @@ func main() {
 
 	router.GET("/acount", routes.Acount)
 
+	router.GET("/api", routes.InfiniteGet)
+
 	router.POST("/", routes.ImagePost)
 	router.POST("/acount", routes.CreateAcount)
 

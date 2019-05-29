@@ -18,33 +18,28 @@ func CreateAcount(c *gin.Context) {
 	userID := session.Get("userId")
 	alive := session.Get("alive")
 
-	if alive == nil {
-		c.Redirect(http.StatusFound, "/auth/google/logout")
-		c.Abort()
-	}
-
-	imageupload.LimitFileSize(5242880, c.Writer, c.Request)
-
-	//アップロード画像の取得
-	img, err := imageupload.Process(c.Request, "file")
-	if err != nil {
-		log.Panicln(err)
-	}
-
-	log.Println(img.Size)
+	isAlive(alive.(bool), c)
 
 	uuid := uuid.New().String()
 
-	img.Save("./icon/" + uuid + ".png")
-
 	c.Request.ParseForm()
 	name := c.Request.Form["name"]
+
+	imageupload.LimitFileSize(5242880, c.Writer, c.Request)
+	//アップロード画像の取得
+	img, err := imageupload.Process(c.Request, "file")
+	if err == nil {
+		img.Save("./icon/" + uuid + ".png")
+	}else{
+		uuid = "NoIcon"
+	}
 
 	db := database.ConnectDB()
 	defer db.Close()
 
 	db.Where(database.UserData{UserID: userID.(string)}).Assign(database.UserData{UserName: name[0], Icon: uuid}).FirstOrCreate(&database.UserData{})
 	c.Redirect(http.StatusFound, "/")
+	c.Abort()
 }
 
 //Acount アカウントの作成画面
@@ -53,31 +48,25 @@ func Acount(c *gin.Context) {
 	userID := session.Get("userId")
 	alive := session.Get("alive")
 
+	isAlive(alive.(bool), c)
+
 	token := csrf.GetToken(c)
 
 	db := database.ConnectDB()
 	defer db.Close()
 
-	if alive == true {
-		user := database.UserData{}
-		user.UserID = userID.(string)
+	user := database.UserData{}
+	user.UserID = userID.(string)
 
-		log.Println(db.First(&user).RecordNotFound())
-
-		if db.First(&user).RecordNotFound() == false {
-			log.Println(db.First(&user))
-			c.Redirect(http.StatusFound, "/")
-			c.Abort()
-		}
-
-		c.HTML(http.StatusOK, "acount.html", gin.H{
-				"_csrf": token,
-				"alive": alive,
-				"id":userID,
-			})
-
-	}else{
-		c.Redirect(http.StatusFound, "/auth/google/logout")
+	if db.First(&user).RecordNotFound() == false {
+		log.Println(db.First(&user))
+		c.Redirect(http.StatusFound, "/")
 		c.Abort()
 	}
+
+	c.HTML(http.StatusOK, "acount.html", gin.H{
+			"_csrf": token,
+			"alive": alive,
+			"id":userID,
+		})
 }
