@@ -1,24 +1,20 @@
 'use strict';
 
 import Vue from 'vue';
-import InfiniteLoading from 'vue-infinite-loading'
+import infinite from './components/app.vue';
 
-Vue.component('infinite-loading', InfiniteLoading)
+const api = window.location + "/api";
 
 new Vue({
   el:'#app',
-  data(){
-    return{
+
+  data: {
       page: 0,
       last:10,
-      list: [],
-    };
+      getData: [],
   },
 
-  methods:{
-    infiniteHandler($state){
-      
-    }
+  components: {
+    'infie' : infinite
   }
-
 });

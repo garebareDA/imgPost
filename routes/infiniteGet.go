@@ -7,7 +7,7 @@ import(
 )
 
 type ImgPostDataJson struct{
-	ID int `json:"id"`
+	PostID int `json:"id"`
 	UserID string `json:"userID"`
 	UserName string `json:"userName"`
 	Text string `josn:"text"`
@@ -32,11 +32,11 @@ func InfiniteGet(c *gin.Context) {
 	}
 
 	imageJson := []ImgPostDataJson{}
-	imgPostt := database.ImgPostData{}
+	lastPost := database.ImgPostData{}
 	userData := database.UserData{}
 
-	db.Last(&imgPostt)
-	lastID := imgPostt.PostID - p
+	db.Last(&lastPost)
+	lastID := lastPost.PostID - p
 
 	for {
 		imgPost := database.ImgPostData{}
@@ -53,7 +53,7 @@ func InfiniteGet(c *gin.Context) {
 		db.First(&userData)
 
 		data := ImgPostDataJson{
-			ID: imgPost.PostID,
+			PostID: imgPost.PostID,
 			UserID: imgPost.UserID,
 			UserName: imgPost.UserName,
 			Text: imgPost.Text,

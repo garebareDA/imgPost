@@ -10,8 +10,6 @@ import(
 	"imgPost/database"
 )
 
-var num int
-
 //ImagePost アップロード画像の保存
 func ImagePost(c *gin.Context) {
 
@@ -38,6 +36,8 @@ func ImagePost(c *gin.Context) {
 	db := database.ConnectDB()
 	defer db.Close()
 
+
+
 	userData := database.UserData{}
 	userData.UserID = userID.(string)
 	user := db.First(&userData)
@@ -48,18 +48,24 @@ func ImagePost(c *gin.Context) {
 		c.Abort()
 	}
 
-	if num == 0 {
+	lastpost := database.ImgPostData{}
+	db.Last(&lastpost)
+	lastID := lastpost.PostID
+
+	var num int
+
+	if lastID == 0 {
 		num = 1
 	}else{
-		num++
+		num = lastID + 1
 	}
+
 	log.Println(num)
 
 	postData := database.ImgPostData{}
 	postData.UserID = userID.(string)
 	postData.UserName = userData.UserName
 	postData.Text = text[0]
-
 	postData.PostID = num
 
 	db.Create(&postData)

@@ -30,6 +30,7 @@ func main() {
 
 	router.Static("/img","./img")
 	router.Static("/icon", "./icon")
+	router.Static("/static", "./static")
 
 	router.Use(sessions.Sessions("postSession", store))
 	router.Use(csrf.Middleware(csrf.Options{
