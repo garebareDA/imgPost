@@ -24,9 +24,14 @@ func Home(c *gin.Context) {
 	})
 }
 
-func isAlive(alive bool, c *gin.Context) {
-	if alive == true{
+func isAlive(alive interface{}, c *gin.Context) {
+	log.Println(alive)
+	if alive == nil{
 
+		c.Redirect(http.StatusFound, "/auth/google/logout")
+		c.Abort()
+
+	}else if alive.(bool) == true{
 		return
 
 	}else{

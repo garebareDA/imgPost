@@ -17,7 +17,9 @@ func ImagePost(c *gin.Context) {
 	userID := session.Get("userId")
 	alive := session.Get("alive")
 
-	isAlive(alive.(bool), c)
+	log.Println(userID)
+
+	isAlive(alive, c)
 
 	c.Request.ParseForm()
 	text := c.Request.Form["text"]
@@ -35,8 +37,6 @@ func ImagePost(c *gin.Context) {
 
 	db := database.ConnectDB()
 	defer db.Close()
-
-
 
 	userData := database.UserData{}
 	userData.UserID = userID.(string)

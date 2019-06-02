@@ -21,6 +21,7 @@ func InfiniteGet(c *gin.Context) {
 	page := c.Query("page")
 	last := c.Query("last")
 
+
 	p, err := strconv.Atoi(page)
 	if err != nil{
 		panic(err)

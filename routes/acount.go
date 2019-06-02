@@ -5,7 +5,6 @@ import(
 	"github.com/gin-contrib/sessions"
 	"github.com/olahol/go-imageupload"
 	"github.com/utrack/gin-csrf"
-	"github.com/google/uuid"
 	"net/http"
 	"log"
 	"imgPost/database"
@@ -18,26 +17,27 @@ func CreateAcount(c *gin.Context) {
 	userID := session.Get("userId")
 	alive := session.Get("alive")
 
-	isAlive(alive.(bool), c)
-
-	uuid := uuid.New().String()
+	isAlive(alive, c)
 
 	c.Request.ParseForm()
 	name := c.Request.Form["name"]
 
 	imageupload.LimitFileSize(5242880, c.Writer, c.Request)
+
 	//アップロード画像の取得
+	var icon string
 	img, err := imageupload.Process(c.Request, "file")
 	if err == nil {
-		img.Save("./icon/" + uuid + ".png")
+		icon = userID.(string)
+		img.Save("./icon/" + userID.(string) + ".png")
 	}else{
-		uuid = "NoIcon"
+		icon = "NoIcon"
 	}
 
 	db := database.ConnectDB()
 	defer db.Close()
 
-	db.Where(database.UserData{UserID: userID.(string)}).Assign(database.UserData{UserName: name[0], Icon: uuid}).FirstOrCreate(&database.UserData{})
+	db.Where(database.UserData{UserID: userID.(string)}).Assign(database.UserData{UserName: name[0], Icon: icon}).FirstOrCreate(&database.UserData{})
 	c.Redirect(http.StatusFound, "/")
 	c.Abort()
 }
@@ -48,7 +48,7 @@ func Acount(c *gin.Context) {
 	userID := session.Get("userId")
 	alive := session.Get("alive")
 
-	isAlive(alive.(bool), c)
+	isAlive(alive, c)
 
 	token := csrf.GetToken(c)
 
@@ -58,7 +58,7 @@ func Acount(c *gin.Context) {
 	user := database.UserData{}
 	user.UserID = userID.(string)
 
-	if db.First(&user).RecordNotFound() == false {
+	if db.First(&user).RecordNotFound() == true {
 		log.Println(db.First(&user))
 		c.Redirect(http.StatusFound, "/")
 		c.Abort()

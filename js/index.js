@@ -2,19 +2,13 @@
 
 import Vue from 'vue';
 import infinite from './components/app.vue';
-
-const api = window.location + "/api";
+import user from './components/user.vue'
 
 new Vue({
   el:'#app',
 
-  data: {
-      page: 0,
-      last:10,
-      getData: [],
-  },
-
   components: {
-    'infie' : infinite
+    'infie' : infinite,
+    'user' : user
   }
 });

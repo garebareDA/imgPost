@@ -14,15 +14,15 @@
 import InfiniteLoading from 'vue-infinite-loading';
 import axios from 'axios';
 
-const api = window.location.origin + '/api'
-console.log(api)
+const api = window.location.origin + '/api/user'
+const userID = window.location.pathname.split('/')[2]
 
 export default {
 
   data() {
     return {
-      page: 0,
-      last: 10,
+      id: userID,
+      last: 0,
       list: [],
     };
   },
@@ -31,12 +31,11 @@ export default {
     infiniteHandler($state) {
       axios.get(api, {
         params: {
-          page: this.page,
+          id: this.id,
           last: this.last
         }
       }).then((data) => {
         if(data.data.length == 10){
-          this.page += 10;
           this.last += 10;
           this.list = data.data;
           console.log(data.data);
