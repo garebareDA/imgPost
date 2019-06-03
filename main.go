@@ -57,10 +57,11 @@ func main() {
 	router.GET("/api/user", routes.InfiniteGetUser)
 
 	router.GET("/user/:user", routes.User)
-	router.GET("/user/:user/setting", )
+	router.GET("/user/:user/setting", routes.UserSetting)
 
 	router.POST("/", routes.ImagePost)
 	router.POST("/acount", routes.CreateAcount)
+	router.POST("/user/:user/setting", routes.UserSettingPost)
 
 	router.Run(":8000")
 }

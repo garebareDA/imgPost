@@ -58,7 +58,7 @@ func Acount(c *gin.Context) {
 	user := database.UserData{}
 	user.UserID = userID.(string)
 
-	if db.First(&user).RecordNotFound() == true {
+	if db.First(&user).RecordNotFound() == false {
 		log.Println(db.First(&user))
 		c.Redirect(http.StatusFound, "/")
 		c.Abort()
