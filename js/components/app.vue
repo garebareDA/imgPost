@@ -1,9 +1,11 @@
 <template>
   <div>
+    <button @click="transPage('post')">投稿</button>
     <p>テスト</p>
     <tr v-for="(item, index) in list" :key="index">
       <td>{{item.Text}}</td>
       <td>{{item.userName}}</td>
+      <img v-bind:src ="'/img/' + item.id + '.jpg'">
 
     </tr>
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
