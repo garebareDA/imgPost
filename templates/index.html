@@ -3,22 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+  <link rel="stylesheet" href="/static/style.css">
   <meta name="csrf_token" content={{._csrf}}>
 </head>
 <body>
-  {{.h}}
-  <p>{{.id}}</p>
-  <p>{{.alive}}</p>
-  <form method="POST" action="/" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <input type="text" name="text">
-    <input type="submit">
-    <input type="hidden" name="_csrf" value="{{._csrf}}">
-  </form>
   <div id="app">
-    <component v-bind:is="currentPage"></component>
+
+    <div class="header">
+      <span class="title">Img Post</span>
+      {{if .alive}}
+      <img class="icon iconMargin" src="/icon/{{.id}}.jpg">
+      <span>{{.name}}</span>
+      <button class="post" @click="transPage('post')">投稿</button>
+      {{else}}
+      <span class="login">
+        <a href="/auth/google">login</a>
+      </span> 
+      {{end}}
+    </div>
+
+      <component v-bind:is="currentPage"></component>
   </div>
-  <a href="/auth/google">login</a>
+
   <a href="/auth/google/logout">logout</a>
 
   <script src="static/bundle.js"></script>

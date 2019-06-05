@@ -1,13 +1,20 @@
 <template>
   <div>
-    <button @click="transPage('post')">投稿</button>
-    <p>テスト</p>
-    <tr v-for="(item, index) in list" :key="index">
-      <td>{{item.Text}}</td>
-      <td>{{item.userName}}</td>
-      <img v-bind:src ="'/img/' + item.id + '.jpg'">
+    <div class="box" v-for="(item, index) in list" :key="index">
 
-    </tr>
+      <div>
+
+        <img class="image" v-bind:src ="'/img/' + item.id + '.jpg'">
+        <div class="text">{{item.Text}}</div>
+
+      </div>
+
+      <div>
+        <img class="icon" v-bind:src="'/icon/' + item.icon + '.jpg'">
+        <div class="userName">{{item.userName}}</div>
+      </div>
+
+    </div>
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
   </div>
 </template>

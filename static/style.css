@@ -1,0 +1,52 @@
+.image {
+  width: 50vw;
+  height: 50vh;
+  object-fit: cover;
+}
+
+.icon {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.userName{
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.text{
+  font-size: 300%;
+  font-family:serif;
+  text-align: center;
+}
+
+.box{
+  text-align: center;
+}
+
+.header{
+  text-align: center;
+  color: azure;
+  background-color: #232323;
+  height: 100%;
+}
+
+.title{
+  font-size: 200%;
+  text-align: center;
+}
+
+.login{
+  margin-left: 50%;
+  text-decoration: none;
+}
+
+a:link{
+  color: azure;
+}
+
+a:visited{
+  color: azure;
+}
+

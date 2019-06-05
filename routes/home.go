@@ -5,6 +5,7 @@ import(
 	"github.com/gin-contrib/sessions"
 	"github.com/utrack/gin-csrf"
 	"net/http"
+	"imgPost/database"
 	"log"
 )
 
@@ -15,11 +16,21 @@ func Home(c *gin.Context) {
 
 	token := csrf.GetToken(c)
 
+	user := database.UserData{}
+
+	if alive == true {
+		db := database.ConnectDB()
+		defer db.Close()
+		user.UserID = userID.(string)
+		db.First(&user)
+	}
+
 	log.Println(userID)
+	log.Println(alive)
 	c.HTML(http.StatusOK, "index.html", gin.H{
-		"h": "<h1>aaaaaaaaaaaaaaaaa</h1>",
 		"alive": alive,
 		"id":userID,
+		"name":user.UserName,
 		"_csrf": token,
 	})
 }

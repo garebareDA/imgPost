@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="transPage('post')">投稿</button>
 
     <form method="POST" action="/" enctype="multipart/form-data">
       <input type="file" name="file">

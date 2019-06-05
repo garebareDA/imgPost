@@ -29,7 +29,7 @@ func CreateAcount(c *gin.Context) {
 	img, err := imageupload.Process(c.Request, "file")
 	if err == nil {
 		icon = userID.(string)
-		img.Save("./icon/" + userID.(string) + ".png")
+		img.Save("./icon/" + userID.(string) + ".jpg")
 	}else{
 		icon = "NoIcon"
 	}
