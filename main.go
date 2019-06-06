@@ -51,11 +51,14 @@ func main() {
 	router.GET("/auth/:provider/callback", auth.CallBack)
 	router.GET("/auth/:provider/logout", auth.LogOut)
 
+	//アカウント作成ページ
 	router.GET("/acount", routes.Acount)
 
+	//API
 	router.GET("/api", routes.InfiniteGet)
 	router.GET("/api/user", routes.InfiniteGetUser)
 
+	//ユーザーページ
 	router.GET("/user/:user", routes.User)
 	router.GET("/user/:user/setting", routes.UserSetting)
 

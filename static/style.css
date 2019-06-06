@@ -4,10 +4,14 @@
   object-fit: cover;
 }
 
+.image:hover {
+  object-fit: contain;
+}
+
 .icon {
   width: 100px;
   height: 100px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .userName{
@@ -26,20 +30,18 @@
 }
 
 .header{
-  text-align: center;
   color: azure;
   background-color: #232323;
   height: 100%;
+  margin-bottom: 3%;
+  text-align: right;
 }
 
 .title{
   font-size: 200%;
-  text-align: center;
-}
-
-.login{
-  margin-left: 50%;
-  text-decoration: none;
+  margin-left: 10%;
+  text-align: right;
+  margin-right: 5%;
 }
 
 a:link{
@@ -50,3 +52,32 @@ a:visited{
   color: azure;
 }
 
+.post {
+  position: sticky;
+  position: fixed;
+  top: 90%;
+  right: 10%;
+  text-align: right;
+
+  display: inline-block;
+  padding: 1em 2em;
+  text-decoration: none;
+  background: #232323;
+  color: #FFFF;
+
+}
+
+.post:hover {
+  color: #232323;
+  background: #FFFF;
+}
+
+.imgPost {
+  text-align: center;
+}
+
+.viewImage{
+  width: 50vw;
+  height: 50vh;
+  object-fit: contain;
+}

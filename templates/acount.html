@@ -6,7 +6,7 @@
 </head>
 <body>
   <form method="POST" action="/acount" enctype="multipart/form-data">
-    <input type="file" name="file">
+    <input type="file" name="file"  v-on:change="onFileChange">
     <input type="text" name="name">
     <input type="submit">
     <input type="hidden" name="_csrf" value="{{._csrf}}">

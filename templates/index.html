@@ -13,21 +13,21 @@
     <div class="header">
       <span class="title">Img Post</span>
       {{if .alive}}
-      <img class="icon iconMargin" src="/icon/{{.id}}.jpg">
-      <span>{{.name}}</span>
-      <button class="post" @click="transPage('post')">投稿</button>
+          <span class="img">
+            <img class="icon iconMargin" src="/icon/{{.id}}.jpg">
+          </span>
+          <span class="user">{{.name}}</span>
+          <a href="/auth/google/logout">ログアウト
+          </a>
+      <button class="post" id="post" @click="transPage()">投稿</button>
       {{else}}
       <span class="login">
-        <a href="/auth/google">login</a>
-      </span> 
+        <a class="" href="/auth/google">ログイン</a>
+      </span>
       {{end}}
     </div>
-
       <component v-bind:is="currentPage"></component>
   </div>
-
-  <a href="/auth/google/logout">logout</a>
-
   <script src="static/bundle.js"></script>
 </body>
 </html>

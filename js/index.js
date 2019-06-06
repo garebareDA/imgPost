@@ -13,10 +13,18 @@ new Vue({
   },
 
   methods:{
-    transPage: function(page){
-      this.currentPage = page
-    }
-  },
+    transPage(){
+      if (this.currentPage === 'infie'){
+        this.currentPage = 'post';
+        const postButton = document.getElementById('post');
+        postButton.innerHTML = "戻る";
+        }else{
+          this.currentPage = 'infie';
+          const postButton = document.getElementById('post');
+          postButton.innerHTML = "投稿";
+        }
+      }
+    },
 
   components: {
     'infie' : infinite,
