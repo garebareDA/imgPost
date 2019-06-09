@@ -10,8 +10,10 @@
       </div>
 
       <div>
-        <img class="icon" v-bind:src="'/icon/' + item.icon + '.jpg'">
-        <div class="userName">{{item.userName}}</div>
+        <a v-bind:href="'/user/' + item.userID">
+          <img class="icon" v-bind:src="'/icon/' + item.icon + '.jpg'">
+          <div class="userName">{{item.userName}}</div>
+        </a>
       </div>
 
     </div>

@@ -2,8 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+  <title>ImgPost</title>
   <link rel="stylesheet" href="/static/style.css">
   <meta name="csrf_token" content={{._csrf}}>
 </head>
@@ -11,18 +10,21 @@
   <div id="app">
 
     <div class="header">
-      <span class="title">Img Post</span>
+      <a href="/">
+        <span class="title">Img Post</span>
+      </a>
       {{if .alive}}
+        <a href="/user/{{.id}}">
           <span class="img">
             <img class="icon iconMargin" src="/icon/{{.id}}.jpg">
           </span>
           <span class="user">{{.name}}</span>
-          <a href="/auth/google/logout">ログアウト
-          </a>
+        </a>
+        <a href="/auth/google/logout">ログアウト</a>
       <button class="post" id="post" @click="transPage()">投稿</button>
       {{else}}
       <span class="login">
-        <a class="" href="/auth/google">ログイン</a>
+        <a href="/auth/google">ログイン</a>
       </span>
       {{end}}
     </div>

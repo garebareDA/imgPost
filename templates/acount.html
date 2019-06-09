@@ -2,12 +2,22 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <title>ImgPost</title>
 </head>
 <body>
-  <form method="POST" action="/acount" enctype="multipart/form-data">
+  <div class="header">
+      <a href="/">
+        <span class="title">Img Post</span>
+      </a>
+    <span class="login">
+      <a href="/auth/google">ログイン</a>
+    </span>
+  </div>
+  <form class="imgPost" method="POST" action="/acount" enctype="multipart/form-data">
+    <span>アイコンを選択してください</span>
     <input type="file" name="file"  v-on:change="onFileChange">
-    <input type="text" name="name">
+    <input type="text" name="name" maxlength="30" placeholder="名前を入力してください">
     <input type="submit">
     <input type="hidden" name="_csrf" value="{{._csrf}}">
   </form>

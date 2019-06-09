@@ -48,6 +48,8 @@ func Acount(c *gin.Context) {
 	userID := session.Get("userId")
 	alive := session.Get("alive")
 
+	log.Println(userID)
+
 	isAlive(alive, c)
 
 	token := csrf.GetToken(c)
@@ -56,10 +58,8 @@ func Acount(c *gin.Context) {
 	defer db.Close()
 
 	user := database.UserData{}
-	user.UserID = userID.(string)
 
-	if db.First(&user).RecordNotFound() == false {
-		log.Println(db.First(&user))
+	if db.Where("user_id = ?", userID).First(&user).RecordNotFound() == false {
 		c.Redirect(http.StatusFound, "/")
 		c.Abort()
 	}

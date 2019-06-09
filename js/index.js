@@ -9,7 +9,8 @@ new Vue({
   el:'#app',
 
   data:{
-    currentPage : 'infie'
+    currentPage : 'infie',
+    userPage: 'user',
   },
 
   methods:{
@@ -23,7 +24,7 @@ new Vue({
           const postButton = document.getElementById('post');
           postButton.innerHTML = "投稿";
         }
-      }
+      },
     },
 
   components: {

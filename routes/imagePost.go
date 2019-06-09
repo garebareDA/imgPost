@@ -22,17 +22,17 @@ func ImagePost(c *gin.Context) {
 	isAlive(alive, c)
 
 	c.Request.ParseForm()
-	text := c.Request.Form["text"]
+	text := c.Request.Form["text"][0]
 
-	if text == nil {
-		text[0] = "(テキストはありません)"
+	if text == "" {
+		text = "(テキストはありません)"
 	}
 
 	imageupload.LimitFileSize(5242880, c.Writer, c.Request)
 
 	img, err := imageupload.Process(c.Request, "file")
 	if err != nil {
-		log.Panicln(err)
+		error(c, "エラーが発生しました")
 	}
 
 	db := database.ConnectDB()
@@ -65,7 +65,7 @@ func ImagePost(c *gin.Context) {
 	postData := database.ImgPostData{}
 	postData.UserID = userID.(string)
 	postData.UserName = userData.UserName
-	postData.Text = text[0]
+	postData.Text = text
 	postData.PostID = num
 
 	db.Create(&postData)

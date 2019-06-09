@@ -2,12 +2,43 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <meta name="csrf_token" content={{._csrf}}>
+  <link rel="stylesheet" href="http://localhost:8000/static/style.css">
+  <title>ImgPost</title>
 </head>
 <body>
 
-  <div id="app">
-    <user></user>
+  <di id="app">
+    <div class="header">
+        <a href="/">
+          <span class="title">Img Post</span>
+        </a>
+      {{if .alive}}
+          <a href="/user/{{.id}}">
+            <span class="img">
+              <img class="icon iconMargin" src="/icon/{{.id}}.jpg">
+            </span>
+          <span class="user">{{.name}}</span>
+          </a>
+          <a href="/auth/google/logout">ログアウト
+          </a>
+
+      {{else}}
+      <span class="login">
+        <a href="/auth/google">ログイン</a>
+      </span>
+      {{end}}
+    </div>
+
+    <div class="imgPost">
+
+      <p>
+        <img class="viewImage userIcon" src="/icon/{{.userID}}.jpg">
+      </p>
+
+      <div class="userNameText">{{.name}}</div>
+    </div>
+      <component v-bind:is="userPage"></component>
   </div>
 
   <script src="http://localhost:8000/static/bundle.js"></script>

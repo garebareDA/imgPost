@@ -66,5 +66,7 @@ func main() {
 	router.POST("/acount", routes.CreateAcount)
 	router.POST("/user/:user/setting", routes.UserSettingPost)
 
+	router.POST("/delete", routes.Delete)
+
 	router.Run(":8000")
 }

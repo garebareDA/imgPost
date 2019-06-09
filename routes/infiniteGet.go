@@ -4,6 +4,7 @@ import(
 	"github.com/gin-gonic/gin"
 	"imgPost/database"
 	"strconv"
+	"github.com/gin-contrib/sessions"
 	"log"
 )
 
@@ -13,6 +14,7 @@ type ImgPostDataJson struct{
 	UserName string `json:"userName"`
 	Text string `josn:"text"`
 	Icon string `json:"icon"`
+	Delete bool `json:"delete"`
 }
 
 func InfiniteGet(c *gin.Context) {
@@ -25,12 +27,12 @@ func InfiniteGet(c *gin.Context) {
 
 	p, err := strconv.Atoi(page)
 	if err != nil{
-		panic(err)
+		c.String(400,"error")
 	}
 
 	l, err := strconv.Atoi(last)
 	if err != nil{
-		panic(err)
+		c.String(400,"error")
 	}
 
 	imageJson := []ImgPostDataJson{}
@@ -42,24 +44,30 @@ func InfiniteGet(c *gin.Context) {
 
 	for {
 		imgPost := database.ImgPostData{}
-		imgPost.PostID = lastID
 		db.Where("post_id = ?", lastID).First(&imgPost)
 
 		if db.Where("post_id = ?", lastID).First(&imgPost).RecordNotFound() == true {
+
 			lastID--
 			l--
-			continue
+
+			if l <= 1 || lastID <= 0 {
+				break
+			}else{
+				continue
+			}
 		}
 
-		userData.UserID = imgPost.UserID
-		db.First(&userData)
+		db.Where("user_id = ?", imgPost.UserID).First(&userData)
+
+		log.Println(userData.Icon)
 
 		data := ImgPostDataJson{
 			PostID: imgPost.PostID,
 			UserID: imgPost.UserID,
 			UserName: imgPost.UserName,
 			Text: imgPost.Text,
-			Icon: userData.Icon,
+			Icon: imgPost.UserID,
 		}
 
 		imageJson = append(imageJson, data)
@@ -74,11 +82,11 @@ func InfiniteGet(c *gin.Context) {
 		}
 
 	}
-
 	c.JSON(200, imageJson)
 }
 
 func InfiniteGetUser(c *gin.Context) {
+
 	db := database.ConnectDB()
 	defer db.Close()
 
@@ -96,19 +104,29 @@ func InfiniteGetUser(c *gin.Context) {
 
 	log.Println(lastnum)
 
+	session := sessions.Default(c)
+	userId := session.Get("userId")
+	alive := session.Get("alive")
+	delete := false
+
+	if alive != nil && userId.(string) == userID && alive.(bool) == true{
+		delete = true
+	}
+
 	for lastnum > 0 {
 		lastnum --
 		post := lastPost[lastnum]
 		userData := database.UserData{}
 		userData.UserID = post.UserID
-		db.First(&userData)
+		db.Where("user_id = ?", post.PostID).First(&userData)
 
 		data := ImgPostDataJson{
 			PostID: post.PostID,
 			UserID: post.UserID,
 			UserName: post.UserName,
 			Text: post.Text,
-			Icon: userData.Icon,
+			Icon: userData.UserID,
+			Delete: delete,
 		}
 
 		imageJson = append(imageJson, data)

@@ -18,15 +18,18 @@ func Home(c *gin.Context) {
 
 	user := database.UserData{}
 
+	db := database.ConnectDB()
+	defer db.Close()
+
 	if alive == true {
-		db := database.ConnectDB()
-		defer db.Close()
-		user.UserID = userID.(string)
-		db.First(&user)
+		db.Where("user_id = ?", userID.(string)).First(&user)
+			if db.Where("user_id = ?", userID.(string)).First(&user).RecordNotFound() && alive == true{
+			c.Redirect(http.StatusFound, "/auth/google/logout")
+		}
 	}
 
-	log.Println(userID)
-	log.Println(alive)
+	log.Println(user.UserName)
+
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"alive": alive,
 		"id":userID,
@@ -50,4 +53,10 @@ func isAlive(alive interface{}, c *gin.Context) {
 		c.Redirect(http.StatusFound, "/auth/google/logout")
 		c.Abort()
 	}
+}
+
+func error(c* gin.Context, Error string) {
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"error": Error,
+	})
 }
